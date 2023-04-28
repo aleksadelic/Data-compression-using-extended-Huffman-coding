@@ -1,3 +1,4 @@
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -16,9 +17,11 @@ public class Main {
         source.generateSymbols();
         source.printSymbols();
 
+        HashMap<String, Integer> symbolCounter = null;
+
         for (int expansion = 1; expansion <= 5; expansion++) {
             System.out.println("\n" + expansion + ". expansion:");
-            source.symbolsProbability(expansion);
+            symbolCounter = source.calculateSymbolsProbability(expansion);
             System.out.println();
 
             int numberOfSymbols = 2 << (expansion - 1);
@@ -27,7 +30,7 @@ public class Main {
             double[] symbolsProbability = new double[numberOfSymbols];
 
             int i = 0;
-            for (Map.Entry<String, Integer> set : source.getSymbolCounter().entrySet()) {
+            for (Map.Entry<String, Integer> set : symbolCounter.entrySet()) {
                 symbols[i] = set.getKey();
                 symbolsFreq[i] = set.getValue();
                 i++;

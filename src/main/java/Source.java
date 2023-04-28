@@ -7,27 +7,21 @@ public class Source {
     private double p01, p10, p00, p11;
     private double H;
 
-    private HashMap<String, Integer> symbolCounter = null;
-
     public Source(int n, double p01, double p10) {
-        symbols = new char[n];
+        this.symbols = new char[n];
         this.p01 = p01;
         this.p10 = p10;
         this.p00 = 1 - p01;
         this.p11 = 1 - p10;
 
-        calculateEntropy();
-    }
-
-    public HashMap<String, Integer> getSymbolCounter() {
-        return symbolCounter;
+        this.H = calculateEntropy();
     }
 
     public double getH() {
         return H;
     }
 
-    public void calculateEntropy() {
+    public double calculateEntropy() {
         double p0 = p10 / (p01 + p10);
         double p1 = 1 - p0;
 
@@ -37,7 +31,11 @@ public class Source {
         if (p01 != 0) H3 = p1 * p01 * Math.log(1 / p01) / Math.log(2);
         if (p11 != 0) H4 = p1 * p11 * Math.log(1 / p11) / Math.log(2);
 
-        H = H1 + H2 + H3 + H4;
+        return H1 + H2 + H3 + H4;
+    }
+
+    public void setSymbols(char[] symbols) {
+        this.symbols = symbols;
     }
 
     public void generateSymbols() {
@@ -61,8 +59,8 @@ public class Source {
         }
     }
 
-    public void symbolsProbability(int exp) {
-        symbolCounter = new HashMap<>();
+    public HashMap<String, Integer> calculateSymbolsProbability(int exp) {
+        HashMap<String, Integer> symbolCounter = new HashMap<>();
         String s;
         for (int i = 0; i < symbols.length; i += exp) {
             try {
@@ -76,7 +74,9 @@ public class Source {
                 symbolCounter.put(s, 1);
             }
         }
-        printMap(exp);
+        printMap(symbolCounter, exp);
+
+        return symbolCounter;
     }
 
     public void printSymbols() {
@@ -89,7 +89,7 @@ public class Source {
         System.out.println();
     }
 
-    public void printMap(int expansion) {
+    public void printMap(Map<String, Integer> symbolCounter, int expansion) {
         System.out.println("Symbol probabilities: ");
         TreeMap<String, Integer> sorted = new TreeMap<>();
         sorted.putAll(symbolCounter);
