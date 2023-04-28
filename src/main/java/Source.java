@@ -31,10 +31,13 @@ public class Source {
         double p0 = p10 / (p01 + p10);
         double p1 = 1 - p0;
 
-        H = p0 * p00 * Math.log(1 / p00) / Math.log(2) +
-                p0 * p10 * Math.log(1 / p10) / Math.log(2) +
-                p1 * p01 * Math.log(1 / p01) / Math.log(2) +
-                p1 * p11 * Math.log(1 / p11) / Math.log(2);
+        double H1 = 0, H2 = 0, H3 = 0, H4 = 0;
+        if (p00 != 0) H1 = p0 * p00 * Math.log(1 / p00) / Math.log(2);
+        if (p10 != 0) H2 = p0 * p10 * Math.log(1 / p10) / Math.log(2);
+        if (p01 != 0) H3 = p1 * p01 * Math.log(1 / p01) / Math.log(2);
+        if (p11 != 0) H4 = p1 * p11 * Math.log(1 / p11) / Math.log(2);
+
+        H = H1 + H2 + H3 + H4;
     }
 
     public void generateSymbols() {
