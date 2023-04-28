@@ -49,13 +49,18 @@ public class Huffman {
         }
     }
 
-    public void generateCodeMap(HuffmanNode root, String s) {
-        if (root.left == null && root.right == null && !root.c.equals("")) {
-            codeMap.put(root.c, s);
+    public HashMap<String, String> generateCodeMap(HuffmanNode root, String s) {
+        generateCodeMapHelper(root, s);
+        return codeMap;
+    }
+
+    private void generateCodeMapHelper(HuffmanNode node, String s) {
+        if (node.left == null && node.right == null && !node.c.equals("")) {
+            codeMap.put(node.c, s);
             return;
         }
-        generateCodeMap(root.left, s + "0");
-        generateCodeMap(root.right, s + "1");
+        generateCodeMap(node.left, s + "0");
+        generateCodeMap(node.right, s + "1");
     }
 
     public void printMap() {
