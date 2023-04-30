@@ -17,7 +17,7 @@ class HuffmanTest {
         expectedMap.put("0", "0");
         expectedMap.put("1", "1");
         huffman.encode(symbols, symbolsFreq);
-        HashMap<String, String> actualMap = huffman.generateCodeMap(huffman.getRoot(), "");
+        HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
     }
 
@@ -31,7 +31,7 @@ class HuffmanTest {
         expectedMap.put("10", "01");
         expectedMap.put("11", "001");
         huffman.encode(symbols, symbolsFreq);
-        HashMap<String, String> actualMap = huffman.generateCodeMap(huffman.getRoot(), "");
+        HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
     }
 
@@ -45,7 +45,7 @@ class HuffmanTest {
         expectedMap.put("10", "10");
         expectedMap.put("11", "11");
         huffman.encode(symbols, symbolsFreq);
-        HashMap<String, String> actualMap = huffman.generateCodeMap(huffman.getRoot(), "");
+        HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
     }
 
@@ -63,7 +63,7 @@ class HuffmanTest {
         expectedMap.put("110", "111");
         expectedMap.put("111", "01");
         huffman.encode(symbols, symbolsFreq);
-        HashMap<String, String> actualMap = huffman.generateCodeMap(huffman.getRoot(), "");
+        HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
         assertEquals(expectedMap, actualMap);
     }
@@ -79,7 +79,7 @@ class HuffmanTest {
         expectedMap.put("011", "1");
         expectedMap.put("100", "011");
         huffman.encode(symbols, symbolsFreq);
-        HashMap<String, String> actualMap = huffman.generateCodeMap(huffman.getRoot(), "");
+        HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
     }
 

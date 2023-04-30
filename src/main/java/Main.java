@@ -19,15 +19,14 @@ public class Main {
 
         HashMap<String, Integer> symbolCounter = null;
 
-        for (int expansion = 1; expansion <= 5; expansion++) {
-            System.out.println("\n" + expansion + ". expansion:");
-            symbolCounter = source.calculateSymbolsProbability(expansion);
+        for (int extension = 1; extension <= 5; extension++) {
+            System.out.println("\n" + extension + ". extension:");
+            symbolCounter = source.countSymbols(extension);
             System.out.println();
 
-            int numberOfSymbols = 2 << (expansion - 1);
+            int numberOfSymbols = 2 << (extension - 1);
             String[] symbols = new String[numberOfSymbols];
             int[] symbolsFreq = new int[numberOfSymbols];
-            double[] symbolsProbability = new double[numberOfSymbols];
 
             int i = 0;
             for (Map.Entry<String, Integer> set : symbolCounter.entrySet()) {
@@ -35,17 +34,16 @@ public class Main {
                 symbolsFreq[i] = set.getValue();
                 i++;
             }
-            for (i = 0; i < symbolsFreq.length; i++) {
-                symbolsProbability[i] = symbolsFreq[i] * 1.0 / n * expansion;
-            }
+            double[] symbolProbabilities = source.calculateSymbolProbabilities(symbolsFreq, extension);
+            source.printProbabilitiesOrderedBySymbols(symbolCounter, extension);
 
             Huffman huffman = new Huffman();
             huffman.encode(symbols, symbolsFreq);
-            huffman.generateCodeMap(huffman.getRoot(), "");
+            huffman.generateCodeMap();
 
             huffman.printMap();
 
-            huffman.calculateEfficiency(symbols, symbolsProbability, source.getH() * expansion);
+            huffman.calculateEfficiency(symbols, symbolProbabilities, source.getH() * extension);
         }
     }
 }

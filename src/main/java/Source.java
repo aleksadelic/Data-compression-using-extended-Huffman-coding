@@ -59,12 +59,12 @@ public class Source {
         }
     }
 
-    public HashMap<String, Integer> calculateSymbolsProbability(int exp) {
+    public HashMap<String, Integer> countSymbols(int extension) {
         HashMap<String, Integer> symbolCounter = new HashMap<>();
         String s;
-        for (int i = 0; i < symbols.length; i += exp) {
+        for (int i = 0; i < symbols.length; i += extension) {
             try {
-                s = new String(symbols, i, exp);
+                s = new String(symbols, i, extension);
             } catch (Exception e) {
                 break;
             }
@@ -74,9 +74,19 @@ public class Source {
                 symbolCounter.put(s, 1);
             }
         }
-        printMap(symbolCounter, exp);
 
         return symbolCounter;
+    }
+
+    public double[] calculateSymbolProbabilities(int[] symbolsFreq, int extension) {
+        int n = symbolsFreq.length;
+        double[] symbolsProbability = new double[n];
+        int sequenceLength = symbols.length / extension;
+        for (int i = 0; i < symbolsProbability.length; i++) {
+            symbolsProbability[i] = symbolsFreq[i] * 1.0 / sequenceLength;
+        }
+
+        return symbolsProbability;
     }
 
     public void printSymbols() {
@@ -89,13 +99,15 @@ public class Source {
         System.out.println();
     }
 
-    public void printMap(Map<String, Integer> symbolCounter, int expansion) {
+    public void printProbabilitiesOrderedBySymbols(HashMap<String, Integer> symbolCounter, int extension) {
+        int sequenceLength = symbols.length / extension;
         System.out.println("Symbol probabilities: ");
         TreeMap<String, Integer> sorted = new TreeMap<>();
         sorted.putAll(symbolCounter);
         for (Map.Entry<String, Integer> entry : sorted.entrySet()) {
-            System.out.println(entry.getKey() + " = " + entry.getValue() * 1.0 / symbols.length * expansion);
+            System.out.println(entry.getKey() + " = " + entry.getValue() * 1.0 / sequenceLength);
         }
+        System.out.println();
     }
 
     public void analyzeSequence() {

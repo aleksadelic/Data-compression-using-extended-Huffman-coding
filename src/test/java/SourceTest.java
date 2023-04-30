@@ -55,7 +55,7 @@ class SourceTest {
         Map<String, Integer> expectedMap = new HashMap<>();
         expectedMap.put("0", 5);
         expectedMap.put("1", 5);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(1));
+        assertEquals(expectedMap, source.countSymbols(1));
     }
 
     @Test
@@ -64,7 +64,7 @@ class SourceTest {
         source.setSymbols(new char[]{'0', '1', '0', '1', '0', '1', '0', '1', '0', '1'});
         Map<String, Integer> expectedMap = new HashMap<>();
         expectedMap.put("01", 5);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(2));
+        assertEquals(expectedMap, source.countSymbols(2));
     }
 
     @Test
@@ -74,7 +74,7 @@ class SourceTest {
         Map<String, Integer> expectedMap = new HashMap<>();
         expectedMap.put("010", 2);
         expectedMap.put("101", 1);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(3));
+        assertEquals(expectedMap, source.countSymbols(3));
     }
 
     @Test
@@ -83,7 +83,7 @@ class SourceTest {
         source.setSymbols(new char[]{'0', '1', '0', '1', '0', '1', '0', '1', '0', '1'});
         Map<String, Integer> expectedMap = new HashMap<>();
         expectedMap.put("0101", 2);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(4));
+        assertEquals(expectedMap, source.countSymbols(4));
     }
 
     @Test
@@ -93,7 +93,7 @@ class SourceTest {
         Map<String, Integer> expectedMap = new HashMap<>();
         expectedMap.put("01010", 1);
         expectedMap.put("10101", 1);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(5));
+        assertEquals(expectedMap, source.countSymbols(5));
     }
 
     @Test
@@ -104,7 +104,7 @@ class SourceTest {
         Map<String, Integer> expectedMap = new HashMap<>();
         expectedMap.put("0", 8);
         expectedMap.put("1", 12);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(1));
+        assertEquals(expectedMap, source.countSymbols(1));
     }
 
     @Test
@@ -117,7 +117,7 @@ class SourceTest {
         expectedMap.put("01", 4);
         expectedMap.put("10", 2);
         expectedMap.put("11", 3);
-        assertEquals(expectedMap, source.calculateSymbolsProbability(2));
+        assertEquals(expectedMap, source.countSymbols(2));
     }
 
 }

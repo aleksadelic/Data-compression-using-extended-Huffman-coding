@@ -56,8 +56,8 @@ public class Huffman {
         }
     }
 
-    public HashMap<String, String> generateCodeMap(HuffmanNode root, String s) {
-        generateCodeMapHelper(root, s);
+    public HashMap<String, String> generateCodeMap() {
+        generateCodeMapHelper(root, "");
         return codeMap;
     }
 
@@ -66,8 +66,8 @@ public class Huffman {
             codeMap.put(node.c, s);
             return;
         }
-        generateCodeMap(node.left, s + "0");
-        generateCodeMap(node.right, s + "1");
+        generateCodeMapHelper(node.left, s + "0");
+        generateCodeMapHelper(node.right, s + "1");
     }
 
     public void printMap() {
@@ -79,17 +79,23 @@ public class Huffman {
         }
     }
 
-    public void calculateEfficiency(String[] symbols, double[] symbolsProbability, double H) {
+    public double[] calculateEfficiency(String[] symbols, double[] symbolsProbability, double H) {
         double Lsr = 0;
+        int ldq = symbols[0].length();
         for (int i = 0; i < symbols.length; i++) {
             if (symbolsProbability[i] == 0)
                 continue;
             Lsr += symbolsProbability[i] * codeMap.get(symbols[i]).length();
         }
+
+        double codingEfficiency = H / Lsr * 100;
+        double compressionRatio = ldq / Lsr;
+
         System.out.println("\nH(S) = " + H);
         System.out.println("Lsr = " + Lsr);
-        System.out.println("Coding efficiency: " + H / Lsr * 100);
-        int ldq = symbols[0].length();
-        System.out.println("Compression ratio: " + ldq / Lsr);
+        System.out.println("Coding efficiency: " + codingEfficiency);
+        System.out.println("Compression ratio: " + compressionRatio);
+
+        return new double[]{Lsr, codingEfficiency, compressionRatio};
     }
 }
