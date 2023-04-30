@@ -12,11 +12,16 @@ public class Huffman {
         HuffmanNode left;
         HuffmanNode right;
 
+        static int order = 0;
+        int myOrder;
+
+
         public HuffmanNode(String c, int p) {
             this.c = c;
             this.p = p;
             left = null;
             right = null;
+            myOrder = order++;
         }
     }
 
@@ -26,9 +31,11 @@ public class Huffman {
 
     public void encode(String[] symbols, int[] frequencies) {
         PriorityQueue<HuffmanNode> queue = new PriorityQueue<>(symbols.length, (x, y) -> {
-            return x.p - y.p;
+            if (x.p == y.p) return x.myOrder - y.myOrder;
+            else return x.p - y.p;
         });
 
+        HuffmanNode.order = 0;
         for (int i = 0; i < symbols.length; i++) {
             if (symbols[i] != null) {
                 HuffmanNode node = new HuffmanNode(symbols[i], frequencies[i]);
