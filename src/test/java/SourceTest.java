@@ -1,5 +1,9 @@
 import org.decimal4j.util.DoubleRounder;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,43 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SourceTest {
 
-    @Test
-    void testEntropyOfDeterministicSequence11() {
-        Source source = new Source(1000, 1, 1);
+    @ParameterizedTest
+    @CsvFileSource(resources = "/entropy.csv", numLinesToSkip = 1)
+    void testEntropy(int sourceLength, double p01, double p10, double expected) {
+        Source source = new Source(sourceLength, p01, p10);
         source.calculateEntropy();
-        double expected = 0;
-        assertEquals(expected, DoubleRounder.round(source.getH(), 5));
-    }
-
-    @Test
-    void testEntropyOfDeterministicSequence01() {
-        Source source = new Source(1000, 0, 1);
-        source.calculateEntropy();
-        double expected = 0;
-        assertEquals(expected, DoubleRounder.round(source.getH(), 5));
-    }
-
-    @Test
-    void testEntropyOf05And05() {
-        Source source = new Source(1000, 0.5, 0.5);
-        source.calculateEntropy();
-        double expected = 1;
-        assertEquals(expected, DoubleRounder.round(source.getH(), 5));
-    }
-
-    @Test
-    void testEntropyOf099And099() {
-        Source source = new Source(1000, 0.99, 0.99);
-        source.calculateEntropy();
-        double expected = 0.08079;
-        assertEquals(expected, DoubleRounder.round(source.getH(), 5));
-    }
-
-    @Test
-    void testEntropyOf02And01() {
-        Source source = new Source(1000, 0.2, 0.1);
-        source.calculateEntropy();
-        double expected = 0.59737;
         assertEquals(expected, DoubleRounder.round(source.getH(), 5));
     }
 

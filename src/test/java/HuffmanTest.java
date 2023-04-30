@@ -65,7 +65,6 @@ class HuffmanTest {
         huffman.encode(symbols, symbolsFreq);
         HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
-        assertEquals(expectedMap, actualMap);
     }
 
     @Test
