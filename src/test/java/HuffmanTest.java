@@ -1,7 +1,7 @@
+import org.decimal4j.util.DoubleRounder;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +30,20 @@ class HuffmanTest {
         expectedMap.put("01", "1");
         expectedMap.put("10", "01");
         expectedMap.put("11", "001");
+        huffman.encode(symbols, symbolsFreq);
+        HashMap<String, String> actualMap = huffman.generateCodeMap();
+        assertEquals(expectedMap, actualMap);
+    }
+
+    @Test
+    void testGenerateCodeMapSecondExtension2() {
+        String[] symbols = new String[]{"00", "01", "10", "11"};
+        int[] symbolsFreq = new int[]{20, 10, 50, 20};
+        HashMap<String, String> expectedMap = new HashMap<>();
+        expectedMap.put("00", "111");
+        expectedMap.put("01", "110");
+        expectedMap.put("10", "0");
+        expectedMap.put("11", "10");
         huffman.encode(symbols, symbolsFreq);
         HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
@@ -80,6 +94,44 @@ class HuffmanTest {
         huffman.encode(symbols, symbolsFreq);
         HashMap<String, String> actualMap = huffman.generateCodeMap();
         assertEquals(expectedMap, actualMap);
+    }
+
+    @Test
+    void testEfficiencyCalculation() {
+        String[] symbols = {"0", "1"};
+        double[] symbolsProbability = {0.5, 0.5};
+        int[] symbolsFreq = {10, 10};
+        double H = 1;
+        double expectedLsr = 1;
+        double expectedCodingEfficiency = 100;
+        double expectedCompressionRatio = 1;
+
+        huffman.encode(symbols, symbolsFreq);
+        huffman.generateCodeMap();
+
+        double[] results = huffman.calculateEfficiency(symbols, symbolsProbability, H);
+        assertEquals(expectedLsr, results[0]);
+        assertEquals(expectedCodingEfficiency, results[1]);
+        assertEquals(expectedCompressionRatio, results[2]);
+    }
+
+    @Test
+    void testEfficiencyCalculation2() {
+        String[] symbols = {"00", "01", "10", "11"};
+        double[] symbolsProbability = {0.2, 0.1, 0.5, 0.2};
+        int[] symbolsFreq = {20, 10, 50, 20};
+        double H = 1.76096;
+        double expectedLsr = 1.8;
+        double expectedCodingEfficiency = 97.83111;
+        double expectedCompressionRatio = 1.11111;
+
+        huffman.encode(symbols, symbolsFreq);
+        huffman.generateCodeMap();
+
+        double[] results = huffman.calculateEfficiency(symbols, symbolsProbability, H);
+        assertEquals(expectedLsr, DoubleRounder.round(results[0], 5));
+        assertEquals(expectedCodingEfficiency, DoubleRounder.round(results[1], 5));
+        assertEquals(expectedCompressionRatio, DoubleRounder.round(results[2], 5));
     }
 
 }
